@@ -1,0 +1,162 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dispatch Readiness Agent</title>
+    <link rel="stylesheet" href="/ui/styles.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">SAP Dispatch Assistant</p>
+          <h1>Daily Dispatch Readiness</h1>
+          <p class="hero-copy">Check which sales orders are ready to deliver, create approval requests, and see blocked items in one simple screen.</p>
+        </div>
+        <div class="status-pill" id="statusPill">Checking</div>
+      </section>
+
+      <section class="work-grid">
+        <form class="panel setup-panel" id="runForm">
+          <div class="panel-heading">
+            <div>
+              <h2>Connect to SAP</h2>
+              <p>Enter your SAP details, then check the connection.</p>
+            </div>
+            <button class="small-button" type="button" id="refreshStatus">Refresh</button>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              <span>SAP system URL</span>
+              <input name="sap_base_url" type="url" value="https://your-sap-host.example.com" placeholder="http://your-sap-host:50000">
+            </label>
+            <label>
+              <span>Client</span>
+              <input name="sap_client" type="text" value="100" placeholder="100">
+            </label>
+            <label>
+              <span>Agent mode</span>
+              <select name="action_mode">
+                <option value="APPROVAL_ONLY">Ask for approval first</option>
+                <option value="CONTROLLED_AUTONOMY">Create delivery after approval</option>
+              </select>
+            </label>
+            <label>
+              <span>SAP user</span>
+              <input name="sap_username" type="text" autocomplete="username">
+            </label>
+            <label>
+              <span>SAP password</span>
+              <input name="sap_password" type="password" autocomplete="current-password">
+            </label>
+            <label>
+              <span>Dispatch date</span>
+              <input name="planning_date" type="date">
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button type="button" class="secondary-button" id="checkConfig">Check connection</button>
+            <button type="submit" class="primary-button">Run dispatch check</button>
+          </div>
+        </form>
+
+        <aside class="panel status-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Today&apos;s Status</h2>
+              <p>What the agent knows right now.</p>
+            </div>
+          </div>
+          <div class="metric-grid">
+            <div class="metric">
+              <span>SAP connection</span>
+              <strong id="connectionState">-</strong>
+            </div>
+            <div class="metric">
+              <span>Login</span>
+              <strong id="authState">-</strong>
+            </div>
+            <div class="metric">
+              <span>Mode</span>
+              <strong id="actionMode">-</strong>
+            </div>
+            <div class="metric">
+              <span>Last run</span>
+              <strong id="lastRun">-</strong>
+            </div>
+          </div>
+          <div class="message-box" id="messageBox">Waiting for SAP details.</div>
+        </aside>
+      </section>
+
+      <section class="results-grid">
+      <section class="panel orders-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Sales Orders</h2>
+            <p>Orders found by the agent.</p>
+          </div>
+        </div>
+        <div class="filter-bar">
+          <label class="search-field">
+            <span>Find order, customer, or material</span>
+            <input id="orderSearch" type="search" placeholder="Example: 50001234, Bigmart, TG11">
+          </label>
+          <label>
+            <span>Result</span>
+            <select id="statusFilter">
+              <option value="">All results</option>
+              <option value="READY_FOR_DELIVERY">Ready</option>
+              <option value="PARTIALLY_READY">Partial stock</option>
+              <option value="BLOCKED">Blocked</option>
+              <option value="AT_RISK">At risk</option>
+              <option value="ALREADY_IN_DELIVERY">Already in delivery</option>
+              <option value="NOT_DUE_FOR_DISPATCH">Not due today</option>
+            </select>
+          </label>
+          <button type="button" class="secondary-button" id="clearFilters">Clear</button>
+        </div>
+        <div class="result-count" id="resultCount">No run yet.</div>
+        <div class="order-detail" id="orderDetail">Select an order to see the action needed.</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Priority</th>
+                <th>Sales order</th>
+                <th>Customer</th>
+                <th>Material</th>
+                <th>Result</th>
+                <th>Qty</th>
+                <th>Reason</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody id="decisionRows">
+              <tr><td colspan="8" class="empty-state">Run the dispatch check to see sales orders here.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel actions-panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Actions Taken</h2>
+            <p>SAP updates and messages.</p>
+          </div>
+        </div>
+        <div class="action-list" id="actionList">
+          <div class="empty-state">No actions yet.</div>
+        </div>
+      </section>
+      </section>
+
+    </main>
+    <script src="/ui/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,34 @@
+﻿{
+  "object_name": "SDRA_DISPATCH_READINESS_AGENT",
+  "description": "SAP-connected dispatch readiness action agent",
+  "sap_connection": {
+    "base_url_env": "SDRA_SAP_BASE_URL",
+    "client_env": "SDRA_SAP_CLIENT",
+    "auth_mode_env": "SDRA_SAP_AUTH_MODE",
+    "username_env": "SDRA_SAP_USERNAME",
+    "password_env": "SDRA_SAP_PASSWORD",
+    "bearer_token_env": "SDRA_SAP_BEARER_TOKEN",
+    "timeout_seconds": 10
+  },
+  "runtime": {
+    "planning_date": "TODAY",
+    "planning_horizon_days": 0,
+    "action_mode_env": "SDRA_ACTION_MODE",
+    "default_action_mode": "APPROVAL_ONLY",
+    "local_runtime_log": "run_outputs/sdra_sap_runtime_log.jsonl"
+  },
+  "sap_services": {
+    "open_sales_orders_path": "/sap/opu/odata/sap/ZC_SDRA_SO_OPEN_CDS/ZC_SDRA_SO_OPEN",
+    "stock_atp_path": "/sap/opu/odata/sap/ZSDRA_DISPATCH_SRV/StockAtp",
+    "delivery_status_path": "/sap/opu/odata/sap/ZSDRA_DISPATCH_SRV/DeliveryStatus",
+    "approval_request_path": "/sap/opu/odata/sap/ZSDRA_ACTION_SRV_SRV/ApprovalRequests",
+    "create_delivery_path": "/sap/opu/odata/sap/ZSDRA_ACTION_SRV/CreateOutboundDelivery",
+    "action_log_path": ""
+  },
+  "autonomy_scope": {
+    "allowed_plants": ["1000"],
+    "allowed_shipping_points": ["SP01"],
+    "allow_create_outbound_delivery": false
+  }
+}
+
