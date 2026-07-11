@@ -18,6 +18,8 @@ Start with:
 
 - `GITHUB_UPLOAD_STEPS.md` for upload instructions
 - `SECURITY_AND_DEMO_NOTES.md` for what is safe to share
+- `docs/ARCHITECTURE.md` for the system architecture diagram
+- `docs/AGENT_FLOW.md` for the agentic execution flow
 - `sample_data/open_sales_orders_sample.json` for a non-confidential example payload
 
 ## Main Files
